@@ -63,11 +63,14 @@ public class MypageServlet extends HttpServlet {
 			}
 		}
 
+
 		MypageBean1 myBean = new MypageBean1();
 		myBean.setValue(list);
 
 		request.setAttribute("myBean",myBean);
 		getServletContext().getRequestDispatcher("/Mypage.jsp").forward(request,response);
-	}
+		request.setAttribute("DiaryList", list);
 
+	}
+	
 }
