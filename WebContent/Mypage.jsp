@@ -14,7 +14,7 @@
 
 
 <form action="MypageServlet" method="get">
-	<input type="submit" value="新規投稿">
+	<input type="submit" value="新規">
 </form>
 </body>
 </html>
