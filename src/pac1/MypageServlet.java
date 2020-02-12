@@ -1,7 +1,6 @@
 package pac1;
 
 import java.io.IOException;
-import java.io.PrintWriter;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
@@ -64,22 +63,11 @@ public class MypageServlet extends HttpServlet {
 			}
 		}
 
-		PrintWriter out = response.getWriter();
-		out.println("<!DOCTYPE html>");
-		out.println("<html>");
-		out.println("<head>");
-		out.println("<meta charset=\"UTF-8\">");
-		out.println("<title>MypageServlet</title>");
-		out.println("</head>");
-		out.println("<body>");
+		MypageBean1 myBean = new MypageBean1();
+		myBean.setValue(list);
 
-
-		for (String str : list) {
-			out.println(str + "<br>");
-		}
-
-		out.println("</body>");
-		out.println("</html>");
+		request.setAttribute("myBean",myBean);
+		getServletContext().getRequestDispatcher("/Mypage.jsp").forward(request,response);
 	}
 
 }
