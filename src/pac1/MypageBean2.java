@@ -1,31 +1,28 @@
 package pac1;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 
 public class MypageBean2 implements Serializable{
-
-	private String title;
-	private String day;
+	
+	private ArrayList<MypageBean1> DiaryArray = new ArrayList<MypageBean1>();
 
 	//constructor
 	public MypageBean2() {
 
 	}
 
-	public void settitle(String title) {
-		this.title = title;
+	public ArrayList<MypageBean1> getDiaryArray(){
+		return DiaryArray;
+		
 	}
-
-	public String gettitle() {
-		return this.title;
+	
+	public void addDiaryArray(MypageBean1 obj){
+		DiaryArray.add(obj);
 	}
-
-	public void setday(String day){
-			this.day=day;
-		}
-
-	public String getday(String day) {
-		return this.day;
+	
+	public int getArraySize() {
+		return DiaryArray.size();
 	}
-
+	
 }

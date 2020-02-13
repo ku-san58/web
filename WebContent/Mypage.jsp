@@ -1,6 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"
-    %>
+    pageEncoding="UTF-8" import="pac1.MypageBean1"
+    import="java.util.ArrayList"%>
 
 <!DOCTYPE html>
 <html>
@@ -9,11 +9,18 @@
 <title>マイページ</title>
 </head>
 <body>
-	<jsp:usebean id="myBean" classs="pac1.MypageBean1" scope="request" />
-	<jsp:getproperty name="myBean1" property="list" />
+<jsp:useBean id="myBean2" class="pac1.MypageBean2"
+scope="session"	/>
+<%
+ArrayList<MypageBean1> getDiaryArray = myBean2.getDiaryArray();
+
+for(MypageBean1 rcd : getDiaryArray){
+	out.println(rcd.getDay()+":"+rcd.getTitle()+"<br>");
+}
+%>
 
 
-<form action="MypageServlet" method="get">
+<form action="sinki_toukou" method="get">
 	<input type="submit" value="新規投稿">
 </form>
 </body>

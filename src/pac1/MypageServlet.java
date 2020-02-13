@@ -6,19 +6,22 @@ import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
-import java.util.ArrayList;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 /**
  * Servlet implementation class SelectSampleServlet1
  */
 @WebServlet("/MypageServlet")
 public class MypageServlet extends HttpServlet {
+	
+	MypageBean1 myBean1 = new MypageBean1();
+	MypageBean2 myBean2 = new MypageBean2();
 
 	@Override
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -26,19 +29,26 @@ public class MypageServlet extends HttpServlet {
 		Connection conn = null;
 		Statement stmt = null;
 		ResultSet rs = null;
-		ArrayList<String> list = new ArrayList<String>();
-
+		String day = null;
+		String title = null;
 		try {
-			Class.forName("com.mysql.jdbc.Driver");
+			Class.forName("org.mariadb.jdbc.Driver");
 			conn = DriverManager.getConnection(
-					"jdbc:mysql://localhost:3306/web?serverTimezone=JST",
-				"root", "yassan5800");
+					"jdbc:mysql://10.15.121.37:3306/webapp2019_sgt2?serverTimezone=JST",
+				"user_sgt2", "sgt2");
 			stmt = conn.createStatement();
 			rs = stmt.executeQuery("SELECT * FROM blog");
 
 			while (rs.next()) {
-				String s = rs.getString("day")+ ":" + rs.getString("title");
-				list.add(s);
+				day= rs.getString("day");
+				title = rs.getString("title");
+				myBean1.setDay(day);
+				myBean1.setTitle(title);
+				myBean2.addDiaryArray(myBean1);
+				HttpSession session = request.getSession();
+				session.setAttribute("myBean2", myBean2);
+				getServletContext()
+				.getRequestDispatcher("/Mypage.jsp").forward(request, response);
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -63,11 +73,9 @@ public class MypageServlet extends HttpServlet {
 			}
 		}
 
-		MypageBean1 myBean = new MypageBean1();
-		myBean.setValue(list);
-
-		request.setAttribute("myBean",myBean);
-		getServletContext().getRequestDispatcher("/Mypage.jsp").forward(request,response);
+		
+		
+		
 	}
 
 }
