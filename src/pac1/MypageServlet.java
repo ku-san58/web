@@ -6,13 +6,13 @@ import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
-import java.util.ArrayList;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 /**
  * Servlet implementation class SelectSampleServlet1
@@ -20,14 +20,17 @@ import javax.servlet.http.HttpServletResponse;
 @WebServlet("/MypageServlet")
 public class MypageServlet extends HttpServlet {
 
+
+	MypageBean2 myBean2 = new MypageBean2();
+
 	@Override
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
 		Connection conn = null;
 		Statement stmt = null;
 		ResultSet rs = null;
-		ArrayList<String> list = new ArrayList<String>();
-
+		String day = null;
+		String title = null;
 		try {
 			Class.forName("com.mysql.jdbc.Driver");
 			conn = DriverManager.getConnection(
@@ -37,8 +40,12 @@ public class MypageServlet extends HttpServlet {
 			rs = stmt.executeQuery("SELECT * FROM blog");
 
 			while (rs.next()) {
-				String s = rs.getString("day")+ ":" + rs.getString("title");
-				list.add(s);
+				day= rs.getString("day");
+				title = rs.getString("title");
+				MypageBean1 myBean1 = new MypageBean1();
+				myBean1.setDay(day);
+				myBean1.setTitle(title);
+				myBean2.addDiaryArray(myBean1);
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -62,15 +69,12 @@ public class MypageServlet extends HttpServlet {
 				}
 			}
 		}
+		HttpSession session = request.getSession();
+		session.setAttribute("myBean2", myBean2);
+		getServletContext()
+		.getRequestDispatcher("/Mypage.jsp").forward(request, response);
 
-
-		MypageBean1 myBean = new MypageBean1();
-		myBean.setValue(list);
-
-		request.setAttribute("myBean",myBean);
-		getServletContext().getRequestDispatcher("/Mypage.jsp").forward(request,response);
-		request.setAttribute("DiaryList", list);
 
 	}
-	
+
 }
