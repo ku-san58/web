@@ -13,7 +13,6 @@
 scope="session"	/>
 <%
 ArrayList<MypageBean1> getDiaryArray = myBean2.getDiaryArray();
-
 for(MypageBean1 rcd : getDiaryArray){
 	out.println(rcd.getDay()+":"+rcd.getTitle()+"<br>");
 }
