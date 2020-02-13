@@ -18,6 +18,9 @@ for(MypageBean1 rcd : getDiaryArray){
 	out.println(rcd.getDay()+":"+rcd.getTitle()+"<br>");
 }
 %>
+<%=
+myBean2.getArraySize()
+%>
 
 
 <form action="sinki_toukou" method="get">

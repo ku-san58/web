@@ -45,10 +45,7 @@ public class MypageServlet extends HttpServlet {
 				myBean1.setDay(day);
 				myBean1.setTitle(title);
 				myBean2.addDiaryArray(myBean1);
-				HttpSession session = request.getSession();
-				session.setAttribute("myBean2", myBean2);
-				getServletContext()
-				.getRequestDispatcher("/Mypage.jsp").forward(request, response);
+				
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -72,8 +69,10 @@ public class MypageServlet extends HttpServlet {
 				}
 			}
 		}
-
-		
+		HttpSession session = request.getSession();
+		session.setAttribute("myBean2", myBean2);
+		getServletContext()
+		.getRequestDispatcher("/Mypage.jsp").forward(request, response);
 		
 		
 	}
