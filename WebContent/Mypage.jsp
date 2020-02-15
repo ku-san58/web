@@ -17,7 +17,7 @@ ArrayList<MypageBean1> getDiaryArray = myBean2.getDiaryArray();
 
 for(MypageBean1 obj : getDiaryArray){
 	out.print(obj.getDay()+":");
-	out.println("<a href=Blog_stringServlet?="+obj.getTitle()+">"+obj.getTitle()+"</a>"+"<br>");
+	out.println("<a href=Blog_stringServlet?titile="+obj.getTitle()+">"+obj.getTitle()+"</a>"+"<br>");
 }
 %>
 

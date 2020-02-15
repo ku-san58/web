@@ -7,6 +7,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -27,7 +28,7 @@ public class Blog_stringServlet extends HttpServlet {
 		ResultSet rs = null;
 		String blog = null;
 		//jspからタイトルをもってきたい
-		String gettitle= "おこった！！！";
+		String gettitle=request.getParameter("title");
 		System.out.println(gettitle);
 		try {
 			Class.forName("com.mysql.jdbc.Driver");
@@ -66,7 +67,10 @@ public class Blog_stringServlet extends HttpServlet {
 		System.out.println(blog);
 
 		request.setAttribute("blog",blog);
-		getServletContext().getRequestDispatcher("/blog_string.jsp").forward(request, response);
+
+		String path = "/blog_string.jsp"; // フォワード先
+	    RequestDispatcher dispatcher = request.getRequestDispatcher(path);
+	    dispatcher.forward(request, response);
 	}
 
 }
