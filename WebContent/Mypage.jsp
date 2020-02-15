@@ -11,14 +11,13 @@
 <body>
 <jsp:useBean id="myBean2" class="pac1.MypageBean2"
 scope="session"	/>
+
 <%
 ArrayList<MypageBean1> getDiaryArray = myBean2.getDiaryArray();
 
 for(MypageBean1 obj : getDiaryArray){
 	out.print(obj.getDay()+":");
-	String url = "Blog_stringServlet";
-	out.println("<a href=\"" + url + "\">"+obj.getTitle()+"</a>"+"<br>");
-
+	out.println("<a href=Blog_stringServlet?="+obj.getTitle()+">"+obj.getTitle()+"</a>"+"<br>");
 }
 %>
 

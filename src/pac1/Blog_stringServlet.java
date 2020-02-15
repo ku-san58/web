@@ -1,13 +1,11 @@
 package pac1;
 
 import java.io.IOException;
-import java.io.PrintWriter;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
-import java.util.ArrayList;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -27,20 +25,20 @@ public class Blog_stringServlet extends HttpServlet {
 		Connection conn = null;
 		Statement stmt = null;
 		ResultSet rs = null;
-		ArrayList<String> list = new ArrayList<String>();
-		String a = "*";
-
+		String blog = null;
+		//jspからタイトルをもってきたい
+		String gettitle= "おこった！！！";
+		System.out.println(gettitle);
 		try {
 			Class.forName("com.mysql.jdbc.Driver");
 			conn = DriverManager.getConnection(
 					"jdbc:mysql://localhost:3306/web?serverTimezone=JST",
 				"root", "yassan5800");
 			stmt = conn.createStatement();
-			rs = stmt.executeQuery("SELECT"+ a +"FROM blog");
+			rs = stmt.executeQuery("SELECT * FROM blog where title='"+gettitle+"'");
 
 			while (rs.next()) {
-				String s = "<td>" + rs.getString("blog_string") + "</td>";
-				list.add(s);
+				 blog =rs.getString("blog_string");
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -65,25 +63,10 @@ public class Blog_stringServlet extends HttpServlet {
 			}
 		}
 
-		PrintWriter out = response.getWriter();
-		out.println("<!DOCTYPE html>");
-		out.println("<html>");
-		out.println("<head>");
-		out.println("<meta charset=\"UTF-8\">");
-		out.println("<title>練習６－１</title>");
-		out.println("</head>");
-		out.println("<body>");
-		out.println("<table border=\"1\">");
-		out.println("<tr>");
-		out.println("<th>ブログ内容</th>");
-		out.println("</tr>");
-		for (String str : list) {
-			out.println("<tr>" + str + "</tr>");
-		}
+		System.out.println(blog);
 
-		out.println("</table>");
-		out.println("</body>");
-		out.println("</html>");
+		request.setAttribute("blog",blog);
+		getServletContext().getRequestDispatcher("/blog_string.jsp").forward(request, response);
 	}
 
 }
