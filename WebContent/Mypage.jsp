@@ -15,12 +15,13 @@ scope="session"	/>
 ArrayList<MypageBean1> getDiaryArray = myBean2.getDiaryArray();
 
 for(MypageBean1 obj : getDiaryArray){
-	out.println(obj.getDay()+":"+obj.getTitle()+"<br>");
+	out.print(obj.getDay()+":");
+	String url = "Blog_stringServlet";
+	out.println("<a href=\"" + url + "\">"+obj.getTitle()+"</a>"+"<br>");
+
 }
 %>
-<%=
-myBean2.getArraySize()
-%>
+
 
 
 <form action="sinki_toukou.html" method="get">
