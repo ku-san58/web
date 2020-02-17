@@ -74,7 +74,6 @@ public class MypageServlet extends HttpServlet {
 		getServletContext()
 		.getRequestDispatcher("/Mypage.jsp").forward(request, response);
 
-
 	}
 
 }
